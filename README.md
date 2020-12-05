@@ -5,6 +5,9 @@
 ---
 
 Ekşi sözlük için geliştirilmiş node.js tabanlı server API. Ekşisözlükten çekilen veriler json formatında kullanıcıya geri döndürülür. 5 controller içerisinde 7 tane endpoint barındıran bu API'yi kolaylıkla kendi bilgisayarınızda çalışır hale getirebilirsiniz.
+[doc](https://eksisozluk-api.herokuapp.com/doc)
+
+[client](https://eksisozluk-api.herokuapp.com/)
 
 ## İçindekiler
 
@@ -34,7 +37,8 @@ $ npm run serve
 ## Demo
 
 API'nin demo'suna buradan ulaşabilirsiniz:
-eksisozluk-api [demo](heroku.com) - TODO: update
+eksisozluk-api: documantation [demo](https://eksisozluk-api.herokuapp.com/doc)
+eksisozluk-api: client [demo](https://eksisozluk-api.herokuapp.com/)
 
 Heroku'nun ücretsiz paketi ile deploy edilmiştir. Çok fazla yüklenmeyin :)
 
