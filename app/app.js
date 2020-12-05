@@ -16,6 +16,7 @@ app.use(helmet({
   contentSecurityPolicy: false,
 }));
 
+app.set('json spaces', 2)
 
 
 module.exports = app;
