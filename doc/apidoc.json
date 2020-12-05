@@ -1,0 +1,10 @@
+{
+  "name": "eksisozluk-api",
+  "version": "1.0.0",
+  "description": "Unofficial eksisozluk.com API",
+  "title": "eksisozluk-api | doc",
+  "header": {
+    "title": "genel",
+    "filename": "./doc/Index.md"
+  }
+}
