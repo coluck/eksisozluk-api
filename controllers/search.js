@@ -14,6 +14,7 @@ const AUTO_URL = EKSI_URL + "/autocomplete/query?q=";
 
 exports.getSearch = async function(query) {
   let response;
+  query = parseQuery(query);
   try {
     response = await axios.get(SEARCH_URL + encodeURIComponent(query),
       // {headers: {"X-Requested-With": "XMLHttpRequest"}}
@@ -27,7 +28,7 @@ exports.getSearch = async function(query) {
   let threads = [];
   let title, entry_count_total, thread = {};
 
-  $(".topic-list").find("li > a").each(function(index, element) {
+  $("#content-body > .topic-list").find("li > a").each(function(index, element) {
     title = $(element).contents().filter(function() {
       return this.nodeType === 3;
     }).text().trim();
@@ -44,7 +45,7 @@ exports.getSearch = async function(query) {
   });
 
   search_result = {
-    thread_count: $("h2").attr("title"),
+    thread_count: $(".topic-list-description").text().trim(),
     threads
   }
   return search_result;
@@ -66,4 +67,10 @@ function parseSearchUrl(reqUrl) {
   let parsedUrl = url.parse(reqUrl);
   let parsedQs = querystring.parse(parsedUrl.query);
   // console.log(parsedQs);
+}
+
+
+function parseQuery(query) {
+  let q = query.split("/ara/")[1];
+  return q;
 }
