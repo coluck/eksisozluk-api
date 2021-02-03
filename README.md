@@ -125,4 +125,3 @@ Aşağıdakiler memnuniyetle karşılanır.
 - Hata bildirimi
 - Pull request
 - Sunucu sağlama
-- İş teklifi 😅
