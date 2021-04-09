@@ -5,8 +5,7 @@ const entryJs = require('./entry');
 const config = require('../config');
 const server = require('../server');
 
-const EKSI_URL = "https://eksisozluk.com";
-const DEBE_URL = EKSI_URL + "/debe";
+const URLS = require('./constants');
 
 
 let DebeModel;
@@ -66,7 +65,7 @@ async function list() {
 async function fetch() {
   let response;
   try {
-    response = await axios.get(DEBE_URL, 
+    response = await axios.get(URLS.DEBE, 
       {headers: {"X-Requested-With": "XMLHttpRequest"}}
     );
   } catch(err) {

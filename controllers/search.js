@@ -4,19 +4,15 @@ const querystring = require('querystring');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const URLS = require('./constants');
 const thradJs = require('./thread');
-
-const EKSI_URL = "https://eksisozluk.com";
-const SEARCH_URL = EKSI_URL + "/basliklar/ara?SearchForm.SortOrder=Count&SearchForm.Keywords=";
-const AUTO_URL = EKSI_URL + "/autocomplete/query?q=";
-
 
 
 exports.getSearch = async function(query) {
   let response;
   query = parseQuery(query);
   try {
-    response = await axios.get(SEARCH_URL + encodeURIComponent(query),
+    response = await axios.get(URLS.SEARCH + encodeURIComponent(query),
       // {headers: {"X-Requested-With": "XMLHttpRequest"}}
     );
   } catch (err) { 
@@ -33,7 +29,7 @@ exports.getSearch = async function(query) {
       return this.nodeType === 3;
     }).text().trim();
     entry_count_total = $(element).find("small").text() || '1';
-    slug = EKSI_URL + $(element).attr("href");
+    slug = URLS.BASE + $(element).attr("href");
     id = thradJs.idFromSlug(slug);
     thread = {
       id: parseInt(id),
@@ -54,7 +50,7 @@ exports.getSearch = async function(query) {
 exports.autoComplete = async function(query) {
   let response;
   try {
-    response = await axios.get(AUTO_URL + encodeURIComponent(query),
+    response = await axios.get(URLS.AUTO_SEARCH + encodeURIComponent(query),
       {headers: {"X-Requested-With": "XMLHttpRequest"}});
   } catch (err) { 
     return { error: err.message };

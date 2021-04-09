@@ -1,15 +1,12 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const URLS = require('./constants');
 
-
-
-const EKSI_URL = "https://eksisozluk.com";
-const USER_URL = EKSI_URL + "/biri/";
 
 exports.getUser = async function(nick) {
   let response;
   try {
-    response = await axios.get(USER_URL + nick);
+    response = await axios.get(URLS.USER + "/" + nick);
   } catch (err) { 
     return { error: err.message };
   }  

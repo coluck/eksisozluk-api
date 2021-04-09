@@ -3,18 +3,14 @@ const querystring = require('querystring');
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-const { response } = require('express');
-
-const EKSI_URL = "https://eksisozluk.com"
-const BASE_URL = EKSI_URL + "/basliklar/";
-
+const URLS = require('./constants');
 
 
 exports.list = async function(reqUrl) {
   let type = parseUrl(reqUrl);
   let response;
   try {
-    response = await axios.get(BASE_URL + type,
+    response = await axios.get(URLS.THREAD + "/" + type,
       {headers: {"X-Requested-With": "XMLHttpRequest"}}
     );
   } catch(err) {
@@ -54,7 +50,7 @@ exports.detail = async function(reqUrl) {
   reqUrl = parseDetailUrl(reqUrl);
   let response;
   try {
-    response = await axios.get(EKSI_URL + "/" + reqUrl);
+    response = await axios.get(URLS.BASE + "/" + reqUrl);
   } catch(err) {
     return { error: err.message };
   }
