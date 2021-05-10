@@ -5,7 +5,6 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const URLS = require('./constants');
 
-
 exports.list = async function(reqUrl) {
   let type = parseUrl(reqUrl);
   let response;
@@ -19,10 +18,9 @@ exports.list = async function(reqUrl) {
   
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
-  let title, slug, entry_count, id;
+  let title, slug, entry_count, id, disambiguations;
   let threads = [];
   let thread = {};
-
 
   $(".topic-list").find("li > a").each(function(index, element) {
     title = $(element).contents().filter(function() {
@@ -33,7 +31,6 @@ exports.list = async function(reqUrl) {
     slug = $(element).attr("href");
     entry_count = $(element).find("small").text() || 1;
     id = exports.idFromSlug(slug);
-
     thread = {
       id: parseInt(id),
       title,
@@ -57,9 +54,10 @@ exports.detail = async function(reqUrl) {
   let entries = [];
   let entry = {};
   let thread = {};
-  let title, id, body, date, author, created_at, updated_at, total_page, tags;
+  let title, id, body, date, author, author_id, fav_count, created_at, updated_at, total_page, tags, disambiguations;
   let current_page;
-
+  let disambiguation_links = [];
+  let disambiguation_titles = [];
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   title = $("#title").attr("data-title");
@@ -70,9 +68,16 @@ exports.detail = async function(reqUrl) {
   tags = $("#hidden-channels").text().trim().split(",") || null;
   tags = tags[0] == "" ? null: tags; 
 
+  disambiguations = $("#disambiguations").find("ul > li").each(function(index, element) {
+    disambiguation_links.push($(element).find("a").attr("href"));
+    disambiguation_titles.push($(element).text());
+  });
+
   $("#entry-item-list").find("li").each(function(index, element) {
     id = $(element).attr("data-id");
     // $(element).find(".content").find("br").replaceWith("\n");
+    fav_count = $(element).attr("data-favorite-count");
+    author_id = $(element).attr("data-author-id");
     body = $(element).find(".content").html().trim();
     date = $(element).find(".entry-date").text();
     author = $(element).find(".entry-author").text();
@@ -82,6 +87,8 @@ exports.detail = async function(reqUrl) {
       id,
       body,
       author,
+      author_id,
+      fav_count,
       created_at,
       updated_at
     };
@@ -90,6 +97,8 @@ exports.detail = async function(reqUrl) {
 
   thread = {
     id:threadID,
+    disambiguation_titles,
+    disambiguation_links,
     title,
     slug,
     total_page,
