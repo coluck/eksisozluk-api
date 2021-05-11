@@ -39,6 +39,20 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "disambiguation_titles",
+            "description": "<p>anlam ayrımı olan başlıkların diğer versiyonları.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "disambiguation_links",
+            "description": "<p>anlam ayrımı olan başlıkların diğer versiyonlarına ait linkler.</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "slug",
@@ -77,7 +91,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"id\": \"31782\",\n  \"title\": \"pena\",\n  \"slug\": \"pena--31782\",\n  \"total_page\": 89,\n  \"current_page\": 1,\n  \"tags\": [\n    \"ekşi-sözlük\",\n    \"müzik\"\n  ],\n  \"entries\": [\n    {\n      \"id\": \"1\",\n      \"body\": \"gitar calmak icin kullanilan minik plastik garip nesne.\",\n      \"author\": \"ssg\",\n      \"created_at\": \"15.02.1999\",\n      \"updated_at\": null\n    },\n    {\n      \"id\": \"69759\",\n      \"body\": \"en iyi pena ayak başparmaklarınızdan elde edeceğiniz tırnaklardan... hassas penadır.\",\n      \"author\": \"otisabi\",\n      \"created_at\": \"13.12.1999 02:23\",\n      \"updated_at\": null\n    },\n    ...\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": \"31782\",\n \"disambiguation_titles\": [],\n \"disambiguation_links\": [],\n \"title\": \"pena\",\n  \"slug\": \"pena--31782\",\n  \"total_page\": 89,\n  \"current_page\": 1,\n  \"tags\": [\n    \"ekşi-sözlük\",\n    \"müzik\"\n  ],\n  \"entries\": [\n    {\n      \"id\": \"1\",\n      \"body\": \"gitar calmak icin kullanilan minik plastik garip nesne.\",\n      \"author\": \"ssg\",\n      \"author_id\": \"8097\",\n      \"fav_count\": \"13262\", \n      \"created_at\": \"15.02.1999\",\n      \"updated_at\": null\n    },\n    {\n      \"id\": \"69759\",\n      \"body\": \"en iyi pena ayak başparmaklarınızdan elde edeceğiniz tırnaklardan... hassas penadır.\",\n      \"author\": \"otisabi\",\n      \"author_id\": \"7894\",\n      \"fav_count\": \"225\", \n      \"created_at\": \"13.12.1999 02:23\",\n      \"updated_at\": null\n    },\n    ...\n  ]\n}",
           "type": "json"
         }
       ]
@@ -432,6 +446,34 @@ define({ "api": [
             "group": "Success 200",
             "type": "String",
             "optional": false,
+            "field": "quote_entry_title",
+            "description": "<p>kullanıcının profiline varsa sabitlediği, yoksa rastgele bir entry'sinin başlığı.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "quote_entry_body",
+            "description": "<p>kullanıcının profiline varsa sabitlediği, yoksa rastgele bir entry'sinin içeriği.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "quote_entry_date",
+            "description": "<p>kullanıcının profiline varsa sabitlediği, yoksa rastgele bir entry'sinin tarihi.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "quote_entry_date",
+            "description": "<p>kullanıcının profiline varsa sabitlediği, yoksa rastgele bir entry'sinin linki.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
             "field": "entry_count_total",
             "description": "<p>kullanıcının toplam entry sayısı.</p>"
           },
@@ -468,7 +510,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n {\n  \"nick\": \"ssg\",\n  \"entry_count_total\": \"50048\",\n  \"entry_count_lastmonth\": \"67\",\n  \"entry_count_lastweek\": \"25\",\n  \"entry_count_today\": \"0\",\n  \"last_entry_time\": \"evvelsi gün\"\n}",
+          "content": "HTTP/1.1 200 OK\n {\r\n  \"nick\": \"ssg\",\r\n  \"quote_entry_title\": \"street coder\",\r\n  \"quote_entry_body\": \"ba\u015Flang\u0131\u00E7 ve orta seviye programc\u0131lar i\u00E7in hem var olan yerle\u015Fik kural ve prensipleri sorgulayan hem de baz\u0131lar\u0131n\u0131 neden kullanmam\u0131z gerekti\u011Fi konusunda sorgular ve tavsiyeler i\u00E7eren <a rel=\\\"nofollow noopener\\\" class=\\\"url\\\" target=\\\"_blank\\\" href=\\\"https:\/\/www.manning.com\/books\/street-coder?utm_source=sedatk&utm_medium=affiliate&utm_campaign=book_kapanoglu_street_10_6_20&a_aid=sedatk&a_bid=72b5d1be\\\" title=\\\"https:\/\/www.manning.com\/books\/street-coder?utm_source=sedatk&utm_medium=affiliate&utm_campaign=book_kapanoglu_street_10_6_20&a_aid=sedatk&a_bid=72b5d1be\\\">kitab\u0131m<\/a>. kitab\u0131n amac\u0131 farkl\u0131 yollardan kendine temel bir programlama bilgisi edinmi\u015F geli\u015Ftiricilere \\\"sokaklarda\\\" ba\u015Flar\u0131na neler gelebilece\u011Fi ve \u00F6nemsemedikleri baz\u0131 konular\u0131n kendilerine bu sokak maceras\u0131nda nas\u0131l yard\u0131mc\u0131 olaca\u011F\u0131 konusunda bir perspektif a\u00E7mak. <a class=\\\"b\\\" href=\\\"\/?q=manning+publications\\\">manning publications<\/a>'\u0131n <a class=\\\"b\\\" href=\\\"\/?q=meap\\\">meap<\/a> erken eri\u015Fim program\u0131yla \u00E7\u0131kt\u0131. gelen geri bildirimler do\u011Frultusunda hem \u015Fekillenecek hem de kitab\u0131n geli\u015Fimini canl\u0131 takip etme imkan\u0131 olacak.<br><br><a rel=\\\"nofollow noopener\\\" class=\\\"url\\\" target=\\\"_blank\\\" href=\\\"https:\/\/streetcoder.org\/\\\">https:\/\/streetcoder.org\/<\/a>\",\r\n  \"quote_entry_date\": \"24.08.2020 22:49 ~ 09.03.2021 03:50\",\r\n  \"quote_entry_url\": \"\/entry\/112047179\",\r\n  \"entry_count_total\": \"50497\",\r\n  \"entry_count_lastmonth\": \"124\",\r\n  \"entry_count_lastweek\": \"23\",\r\n  \"entry_count_today\": \"0\",\r\n  \"last_entry_time\": \"d\u00FCn\"\r\n}",
           "type": "json"
         }
       ]
