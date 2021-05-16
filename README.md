@@ -5,6 +5,8 @@
 ---
 
 Ekşi sözlük için geliştirilmiş node.js tabanlı server API. Ekşisözlükten çekilen veriler json formatında kullanıcıya geri döndürülür. 5 controller içerisinde 7 tane endpoint barındıran bu API'yi kolaylıkla kendi bilgisayarınızda çalışır hale getirebilirsiniz.
+
+
 [doc](https://es-api.site/doc)  [Resmi]
 
 
