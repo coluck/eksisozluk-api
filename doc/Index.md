@@ -1,12 +1,13 @@
-| controller          | method |         endpoint          | örnek url \(tıkla\)            | açıklama            |
-| ------------------- | ------ | :-----------------------: | ------------------------------ | ------------------- |
-| thread.list         | get    |      `api/basliklar`      | [\/api\/basliklar][1]          | başlıkları getirir  |
-| thread.detail       | get    |    `api/baslik/:slug`     | [\/api\/baslik\/pena][2]       | bir başlığı getirir |
-| debe.getDebe        | get    |        `api/debe`         | [\/api\/debe][3]               | debe'yi getirir     |
-| entry.getEntry      | get    |      `api/entry/:id`      | [\/api\/entry\/1][4]           | bir entry'i getirir |
-| user.getUser        | get    |     `api/biri/:nick`      | [\/api\/biri\/ssg][5]          | bir suser'ı getirir |
-| search.getSearch    | get    |     `api/ara/:query`      | [\/api\/ara\/pena][6]          | arama sonucu        |
-| search.autoComplete | get    | `api/autocomplete/:query` | [\/api\/autocomplete\/pena][7] | otomatik tamamlama  |
+| ------------------- | ------ | :-----------------------:  | ------------------------------- | ------------------------------- |
+| controller          | method |         endpoint           | örnek url \(tıkla\)             | açıklama                        |
+| thread.list         | get    |      `api/basliklar`       | [\/api\/basliklar][1]           | başlıkları getirir              |
+| thread.detail       | get    |    `api/baslik/:slug`      | [\/api\/baslik\/pena][2]        | bir başlığı getirir             |
+| debe.getDebe        | get    |        `api/debe`          | [\/api\/debe][3]                | debe'yi getirir                 |
+| entry.getEntry      | get    |      `api/entry/:id`       | [\/api\/entry\/1][4]            | bir entry'i getirir             |
+| user.getUser        | get    |     `api/biri/:nick`       | [\/api\/biri\/ssg][5]           | bir suser'ı getirir             |
+| user.getUserEntry   | get    |`api/biri/entry/:nick/:page`| [\/api\/biri\/entry\/ssg\/1][8] | bir suser'ı enrtylerini getirir |
+| search.getSearch    | get    |     `api/ara/:query`       | [\/api\/ara\/pena][6]           | arama sonucu                    |
+| search.autoComplete | get    | `api/autocomplete/:query`  | [\/api\/autocomplete\/pena][7]  | otomatik tamamlama              |
 
 ### [github repo][99]
 
@@ -29,6 +30,7 @@ npm run serve
 [5]: ../api/biri/ssg
 [6]: ../api/ara/pena
 [7]: ../api/autocomplete/pena
+[8]: ../api/biri/entry/ssg/1
 [99]: https://github.com/coluck/eksisozluk-api
 
 api dokümantasyon'u için apidoc kullanıldı.
