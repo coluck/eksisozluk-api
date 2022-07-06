@@ -1,32 +1,22 @@
 {
   "name": "eksisozluk-api",
-  "version": "1.0.0",
-  "description": "Unofficial api for eksisozluk.com",
-  "main": "server.js",
+  "version": "0.0.1",
+  "description": "Latest unofficial eksisozluk api",
+  "main": "main.js",
   "scripts": {
-    "serve": "node server.js",
-    "dev": "nodemon server.js",
-    "docg": "apidoc -f doc/doc.js -o public/doc -c doc/apidoc.json"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otuva/eksisozluk-api.git"
   },
   "keywords": [
-    "eksisozluk-api",
-    "api",
-    "crawler",
-    "express"
+    "eksisozluk"
   ],
-  "author": "Oguz Colak <oguzcoluck@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.3",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "helmet": "^4.2.0",
-    "mongoose": "^5.12.3",
-    "node-cache": "^5.1.2",
-    "nodemon": "^2.0.6"
+  "author": "Onur Alp Akin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/otuva/eksisozluk-api/issues"
   },
-  "devDependencies": {},
-  "_id": "eksisozluk-api@1.0.0"
+  "homepage": "https://github.com/otuva/eksisozluk-api#readme"
 }
