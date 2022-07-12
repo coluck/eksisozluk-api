@@ -1,10 +1,12 @@
 require('dotenv').config();
 
-const config = {
-  apiEndpoint: '/api',
+const api = {
+  endpoint: '/api',
 }
 
-module.exports = config;
+module.exports = {
+  api
+};
 // export const apiEnpoint = '/api';
 // export const serveDoc = true;
 // export const serveClientEx = true;
