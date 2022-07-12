@@ -3,7 +3,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const urls = require('../constant/urls');
-const entryDate = require('../parsers/entryDate');
+const parseEntryDateTime = require('../utils/entry/parseEntryDateTime');
 
 
 module.exports = async (id) => {
@@ -19,22 +19,39 @@ module.exports = async (id) => {
 
     const $ = cheerio.load(response.data, { decodeEntities: false });
 
-    const element = $(`li[data-id=${id}]`)
-    // const id = element.attr("data-id");
     const title = $("#title").attr("data-title");
+    const element = $(`li[data-id=${id}]`)
     const body = element.find(".content").html().trim();
     const author = element.attr("data-author");
     const favCount = element.attr("data-favorite-count");
-    const date = element.find(".entry-date").text();
-    const [createdAt, updatedAt] = entryDate(date);
+    const isPinned = element.attr("data-ispinned");
+    const isPinnedOnProfile = element.attr("data-ispinnedonprofile");
+    const inEksiSeyler = element.attr("data-seyler-slug") ? "true" : "false";
+    const commentCount = element.attr("data-comment-count");
+    // fix to the problem stems from eksisozluk -> default picture doesn't have leading 'https:' string in the url
+    const _authorProfilePictureSrc = element.find(".avatar").attr("src")
+    const authorProfilePicture = _authorProfilePictureSrc.startsWith("https://") ? _authorProfilePictureSrc : `https:${_authorProfilePictureSrc}`;
+    const date = element.find("footer > div.info > div.entry-footer-bottom > div.footer-info > div:eq(1) > a").text();
+    const [createdAtDate, createdAtTime, updatedAtDate, updatedAtTime] = parseEntryDateTime(date);
 
     return {
         id,
         title,
         body,
-        author,
         favCount,
-        createdAt,
-        updatedAt,
+        isPinned,
+        isPinnedOnProfile,
+        inEksiSeyler,
+        commentCount,
+        aboutAuthor: {
+            author,
+            authorProfilePicture
+        },
+        aboutDateTime: {
+            createdAtDate,
+            createdAtTime,
+            updatedAtDate,
+            updatedAtTime
+        }
     };
 }
