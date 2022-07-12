@@ -4,8 +4,8 @@ const helmet = require('helmet');
 
 const app = express();
 
-app.use(cors());
-app.use(helmet({
+app.use(cors()); // Allow Cross-Origin requests
+app.use(helmet({ // Set security HTTP headers
     contentSecurityPolicy: false,
 }));
 
