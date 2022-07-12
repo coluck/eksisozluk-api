@@ -17,7 +17,7 @@ exports.getUser = async function (nick) {
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   let quote_entry_title = $("#quote-entry > h2 > a").text();
-  let quote_entry_body = $("#quote-entry > div > p").html().trim();
+  let quote_entry_body = $("#quote-entry > div > p").html();
   let quote_entry_date = $("#quote-entry > footer > a").text();
   let quote_entry_url = $("#quote-entry > footer > a").attr("href");
   let user_nick = $("#user-profile-title").attr("data-nick");
@@ -43,7 +43,7 @@ exports.getUser = async function (nick) {
 }
 
 exports.getUserEntry = async (nick, page) => {
-  
+
   let response;
   let items = [];
 
@@ -60,17 +60,17 @@ exports.getUserEntry = async (nick, page) => {
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   $('.topic-item').each(function (i, elem) {
-    
+
     let itemName = $('.topic-item>h1>a').eq(i).text();
     let itemUrl = $('.topic-item>h1>a').eq(i).attr("href");
     let itemDate = $('.topic-item>ul>li>footer .permalink').eq(i).text();
     let itemSummary = $('.topic-item>ul>li .content').eq(i).text();
-    
+
     items.push({
       name: itemName,
       date: itemDate,
       summary: itemSummary,
-      url:URLS.BASE+itemUrl
+      url: URLS.BASE + itemUrl
     })
 
   });

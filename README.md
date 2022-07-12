@@ -20,13 +20,17 @@ Ekşi sözlük için geliştirilmiş node.js tabanlı server API. Ekşisözlükt
 
 ## İçindekiler
 
-- [Kurulum](#kurulum)
-- [Demo](#demo)
-- [API Endpointleri](#api-endpointleri)
-- [API Dokümanı](#api-dokümanı)
-- [Örnek Uygulama](#örnek-uygulama)
-- [Ayarlar](#ayarlar)
-- [Notlar](#notlar)
+- [eksisozluk-api](#eksisozluk-api)
+    - [Unofficial eksisozluk.com API - Resmi olmayan ekşi sözlük API'si.](#unofficial-eksisozlukcom-api---resmi-olmayan-ekşi-sözlük-apisi)
+  - [İçindekiler](#i̇çindekiler)
+  - [Kurulum](#kurulum)
+  - [Demo](#demo)
+  - [Api Endpointleri](#api-endpointleri)
+  - [Api Dokümanı](#api-dokümanı)
+  - [Ayarlar](#ayarlar)
+  - [Örnek Uygulama](#örnek-uygulama)
+  - [Notlar](#notlar)
+  - [Destek](#destek)
 
 ---
 
@@ -55,15 +59,15 @@ Heroku'nun ücretsiz paketi ile deploy edilmiştir. Çok fazla yüklenmeyin :)
 
 ## Api Endpointleri
 
-| method | endpoint                  | açıklama                        |
-| ------ | ------------------------- | ------------------------------- |
-| get    | `api/basliklar`           | gündemdeki başlıkları getirir   |
-| get    | `api/baslik/:slug`        | spesifik bir başlığı getirir    |
-| get    | `api/debe`                | debe'yi getirir (yavaş çalışır) |
-| get    | `api/entry/:id`           | spesifik bir entry'i getirir    |
-| get    | `api/biri/:nick`          | bir suser'ı getirir             |
-| get    | `api/ara/:query`          | arama sonucunu getirir          |
-| get    | `api/autocomplete/:query` | otomatik tamamlama özelliği     |
+| method | endpoint                  | açıklama                               |
+| ------ | ------------------------- | -------------------------------------- |
+| get    | `api/basliklar`           | gündemdeki başlıkları getirir          |
+| get    | `api/baslik/:slug`        | spesifik bir başlığı getirir           |
+| get    | `api/debe`                | debe'yi getirir (yavaş çalışır)        |
+| get    | `api/entry/:id`           | spesifik bir entry'i getirir           |
+| get    | `api/biri/:nick`          | bir suser'ı getirir(TODO: calismiyor ) |
+| get    | `api/ara/:query`          | arama sonucunu getirir                 |
+| get    | `api/autocomplete/:query` | otomatik tamamlama özelliği            |
 
 API tamamen GET metot'larından oluşmaktadır. eksisozluk.com'dan çektiği veri'leri uygun bir json formatında geri döner.
 
