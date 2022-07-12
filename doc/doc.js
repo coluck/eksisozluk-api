@@ -115,6 +115,41 @@ function getUser() {
   let va;
 }
 
+
+/**
+ * @api {get} /api/entry/:nick/:page kullancının entrylerini getir
+ * @apiName GetUserEntry
+ * @apiGroup user
+ * @apiDescription nick ile kullanıcı bilgisi getiren endpoint.
+ * @apiVersion 1.0.0
+ *
+ * @apiParam {String} nick          kullanıcı nick'i
+ * @apiParam {int}  page            sayfa numarası
+ *
+ * @apiSuccess {String} name       entry başlığı.
+ * @apiSuccess {String} date         entryinin girildiği tarih.
+ * @apiSuccess {String} summary     entry içeriği.
+ * @apiSuccess {String} url       entry linki.
+ *
+ * @apiSuccessExample Success-Response:
+ * HTTP/1.1 200 OK
+ {
+  "name": "google authenticator",
+  "date": "28.01.2021 03:49 ~ 03:50",
+  "summary": "\n    kodları yeni cihaza aktarmak aşırı kolaylaşmış. dev bir qr code'la birden fazla hesabı tek seferde ekleyebiliyorsunuz. böylece onar onar hesap aktarabiliyorsunuz. #böyleolmalı.\n  ",
+  "url": "https://eksisozluk.com/google-authenticator--2759368"
+ },
+ *
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ * {"error":"Request failed with status code 404"}
+ */
+function getUserEntry() {
+  let va;
+}
+
+
 /**
  * @api {get} /api/entry/:id tekil entry GETir.
  * @apiName GetEntry

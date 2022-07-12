@@ -3,16 +3,19 @@ const cheerio = require('cheerio');
 const URLS = require('./constants');
 
 
-exports.getUser = async function(nick) {
+exports.getUser = async function (nick) {
   let response;
   try {
     response = await axios.get(URLS.USER + "/" + nick);
-  } catch (err) { 
+  } catch (err) {
     return { error: err.message };
-  }  
+  }
+
+
+
   let user = {};
   let $ = cheerio.load(response.data, { decodeEntities: false });
-  
+
   let quote_entry_title = $("#quote-entry > h2 > a").text();
   let quote_entry_body = $("#quote-entry > div > p").html().trim();
   let quote_entry_date = $("#quote-entry > footer > a").text();
@@ -23,7 +26,7 @@ exports.getUser = async function(nick) {
   let entry_count_lastweek = $("#entry-count-lastweek").text().trim();
   let entry_count_today = $("#entry-count-today").text().trim();
   let last_entry_time = $("#last-entry-time").text().trim();
-  
+
   user = {
     nick: user_nick,
     quote_entry_title,
@@ -37,4 +40,43 @@ exports.getUser = async function(nick) {
     last_entry_time,
   }
   return user;
+}
+
+exports.getUserEntry = async (nick, page) => {
+  
+  let response;
+  let items = [];
+
+  try {
+    response = await axios.get(URLS.USER_ENTRY + nick + "&p=" + parseInt(page), {
+      "headers": {
+        "x-requested-with": "XMLHttpRequest",
+      },
+    });
+  } catch (err) {
+    return { error: err.message };
+  }
+
+  let $ = cheerio.load(response.data, { decodeEntities: false });
+
+  $('.topic-item').each(function (i, elem) {
+    
+    let itemName = $('.topic-item>h1>a').eq(i).text();
+    let itemUrl = $('.topic-item>h1>a').eq(i).attr("href");
+    let itemDate = $('.topic-item>ul>li>footer .permalink').eq(i).text();
+    let itemSummary = $('.topic-item>ul>li .content').eq(i).text();
+    
+    items.push({
+      name: itemName,
+      date: itemDate,
+      summary: itemSummary,
+      url:URLS.BASE+itemUrl
+    })
+
+  });
+
+
+
+
+  return { items }
 }

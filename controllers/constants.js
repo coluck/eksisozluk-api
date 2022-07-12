@@ -7,6 +7,7 @@ const SEARCH = BASE + "/basliklar/ara?SearchForm.SortOrder=Count&SearchForm.Keyw
 const AUTO_SEARCH = BASE + "/autocomplete/query?q=";
 const THREAD = BASE + "/basliklar";
 const USER = BASE + "/biri";
+const USER_ENTRY = BASE + "/son-entryleri?nick="
 
 
 const URLS = {
@@ -16,7 +17,8 @@ const URLS = {
   SEARCH,
   AUTO_SEARCH,
   THREAD,
-  USER
+  USER,
+  USER_ENTRY
 };
 
 module.exports = URLS;

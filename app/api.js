@@ -54,4 +54,10 @@ router.get('/autocomplete/:query', async function(req, res, next) {
 });
 
 
+/* GET user entry */
+router.get('/biri/entry/:nick/:page', async function(req, res, next) {
+  response = await user.getUserEntry(req.params.nick,req.params.page);
+  res.json(response);
+});
+
 module.exports = router;
