@@ -1,11 +1,9 @@
-// import { Router } from 'express';
 const express = require('express');
+// const thread = require('../controllers/thread');
 const entry = require('../controllers/entry');
-// import thread from '../controllers/thread';
-// import entry from '../controllers/entry';
-// import debe from '../controllers/debe';
-// import user from '../controllers/user';
-// import search from '../controllers/search';
+const debe = require('../controllers/debe');
+// const user = require('../controllers/user');
+// const search = require('../controllers/search');
 
 const router = express.Router();
 
@@ -32,10 +30,10 @@ router.get('/entry/:id', async function (req, res, next) {
 });
 
 /* GET debe entries listing. */
-// router.get('/debe', async function(req, res, next) {
-//   response = await debe.getDebe();
-//   res.json(response);
-// });
+router.get('/debe', async function(req, res, next) {
+  response = await debe();
+  res.json(response);
+});
 
 /* GET user profile */
 // router.get('/biri/:nick', async function(req, res, next) {
