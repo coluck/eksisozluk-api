@@ -1,11 +1,14 @@
-require('dotenv').config();
+// require('dotenv').config();
 
 const api = {
   endpoint: '/api',
 }
 
+const asyncRequestHeaders = {"X-Requested-With": "XMLHttpRequest"}
+
 module.exports = {
-  api
+  api,
+  asyncRequestHeaders
 };
 // export const apiEnpoint = '/api';
 // export const serveDoc = true;
