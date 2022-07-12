@@ -7,7 +7,8 @@ const router = require('./server/router');
 const port = process.env.PORT || 3000;
 
 
-app.use(config.apiEndpoint, router); // use the api router for all requests to the api endpoint
+console.log(config)
+app.use(config.api.endpoint, router); // use the api router for all requests to the api endpoint
 
 // start the server
 app.listen(port, () => {
