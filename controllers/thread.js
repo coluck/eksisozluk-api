@@ -4,6 +4,7 @@ const querystring = require('querystring');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const URLS = require('./constants');
+const config = require("../config")
 
 exports.list = async function(reqUrl) {
   let type = parseUrl(reqUrl);
@@ -15,7 +16,7 @@ exports.list = async function(reqUrl) {
   } catch(err) {
     return { error: err.message };
   }
-  
+
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   let title, slug, entry_count, id, disambiguations;
@@ -66,7 +67,7 @@ exports.detail = async function(reqUrl) {
   total_page = parseInt($(".pager").attr("data-pagecount")) || 1;
   current_page = parseInt($(".pager").attr("data-currentpage")) || 1;
   tags = $("#hidden-channels").text().trim().split(",") || null;
-  tags = tags[0] == "" ? null: tags; 
+  tags = tags[0] == "" ? null: tags;
 
   disambiguations = $("#disambiguations").find("ul > li").each(function(index, element) {
     disambiguation_links.push($(element).find("a").attr("href"));
@@ -83,6 +84,36 @@ exports.detail = async function(reqUrl) {
     author = $(element).find(".entry-author").text();
     date = $(element).find(".entry-date").text();
     [created_at, updated_at] = parseDate(date);
+
+    if(config.isMobile){
+      let aRegex = new RegExp("<\\s*a[^>]*>(.*?)<\\s*/\\s*a>","g")
+      let aSplitRegex = new RegExp("<a[^>](.*?)</a>")
+      body = body.replaceAll("<br>", "[BR]")
+      let sp = body.match(aRegex)
+      //let a = sp[0].split(aSplitRegex)
+      if(sp !== null){
+        sp = sp.forEach((s, i) => {
+          let linkText = s.split(aSplitRegex)[1].replaceAll(">", "<<!")
+          let splitA = linkText.split("<<!")
+          let tags = splitA[0].split(" ")
+          let text = splitA[1].replaceAll(" ", "%%")
+          let href = tags.find(t => t.includes("href")).replaceAll('href="', "").replace('"', "")
+          let lastResult = `[Link href=${href} text=${text}]`
+
+          body = body.replaceAll(s, lastResult)
+
+
+          //app decode example
+          // let spL = lastResult.replace("[", "").replace("]", "").split(" ")
+          // let appHref = spL.find(s => s.includes("href")).split("href=")[1]
+          // let appText = spL.find(s => s.includes("text")).split("text=")[1].replaceAll("%%", " ")
+          // console.log("href",appHref)
+          // console.log("text", appText)
+        })
+
+      }
+    }
+
     entry = {
       id,
       body,
@@ -106,17 +137,17 @@ exports.detail = async function(reqUrl) {
     tags,
     entries
   }
-  
+
   return thread;
 }
 
 /*
-  parse endpoint url: basliklar/  
+  parse endpoint url: basliklar/
 */
 function parseUrl(reqUrl) {
   let parsedUrl = url.parse(reqUrl); //    /api/basliklar?kanal=spor?p=2
   let parsedQs = querystring.parse(parsedUrl.query);
-  
+
   let retUrl = "gundem";
 
   if(parsedQs.kanal)
