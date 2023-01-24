@@ -9,7 +9,7 @@ const config = {
   useMongo: process.env.USE_MONGO || false,   // to save debe to mongodb
   cacheAPI: process.env.CACHE_API || false,   // for /debe endpoint
   limitAPI: process.env.LIMIT_API || false,
-  isMobile: process.env.IS_MOBILE || false, // for mobile apps(filter a links etc.)
+  isMobile: process.env.IS_MOBILE || true, // for mobile apps(filter a links etc.)
 };
 
 module.exports = config;
