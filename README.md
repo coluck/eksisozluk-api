@@ -94,6 +94,7 @@ const config = {
   useMongo: process.env.USE_MONGO || false,
   cacheAPI: process.env.CACHE_API || false,
   limitAPI: process.env.LIMIT_API || false,
+  isMobile: process.env.IS_MOBILE || false,
 };
 ```
 
@@ -125,6 +126,19 @@ Debe'yi getiren fonksiyon tüm entrileri tek tek çektiği için yavaş çalış
 2. Debe objesini cache'lemek. (node-cache modülü kullanıldı.)
 
 Bu yöntemler ile debe.getDebe fonksiyonu ilk çağrıdan sonraki çağrılarda performans artışı sağlar.
+
+
+## config.js -> isMobile
+
+Eğer değer "false" ise
+![eksi-default](imgs/eksi-default.png)
+
+<hr>
+Eğer değer "true" ise
+
+![eksi-with-IsMobile](imgs/with-isMobile.png)
+
+<h1>React Native kullanımı için Hightlight Modülü yazılacak...</h1>
 
 ## Destek
 

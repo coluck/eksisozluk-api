@@ -1,21 +1,22 @@
-const url = require('url');
-const querystring = require('querystring');
+const url = require("url");
+const querystring = require("querystring");
 
-const axios = require('axios');
-const cheerio = require('cheerio');
-const URLS = require('./constants');
+const axios = require("axios");
+const cheerio = require("cheerio");
+const URLS = require("./constants");
+const config = require("../config");
 
 exports.list = async function(reqUrl) {
   let type = parseUrl(reqUrl);
   let response;
   try {
     response = await axios.get(URLS.THREAD + "/" + type,
-      {headers: {"X-Requested-With": "XMLHttpRequest"}}
+      { headers: { "X-Requested-With": "XMLHttpRequest" } },
     );
-  } catch(err) {
+  } catch (err) {
     return { error: err.message };
   }
-  
+
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   let title, slug, entry_count, id, disambiguations;
@@ -35,12 +36,12 @@ exports.list = async function(reqUrl) {
       id: parseInt(id),
       title,
       slug,
-      entry_count
+      entry_count,
     };
     threads.push(thread);
   });
   return threads;
-}
+};
 
 
 exports.detail = async function(reqUrl) {
@@ -48,7 +49,7 @@ exports.detail = async function(reqUrl) {
   let response;
   try {
     response = await axios.get(URLS.BASE + "/" + reqUrl);
-  } catch(err) {
+  } catch (err) {
     return { error: err.message };
   }
   let entries = [];
@@ -61,12 +62,12 @@ exports.detail = async function(reqUrl) {
   let $ = cheerio.load(response.data, { decodeEntities: false });
 
   title = $("#title").attr("data-title");
-  threadID =  $("#title").attr("data-id");
+  threadID = $("#title").attr("data-id");
   slug = $("#title").attr("data-slug") + "--" + threadID;
   total_page = parseInt($(".pager").attr("data-pagecount")) || 1;
   current_page = parseInt($(".pager").attr("data-currentpage")) || 1;
   tags = $("#hidden-channels").text().trim().split(",") || null;
-  tags = tags[0] == "" ? null: tags; 
+  tags = tags[0] == "" ? null : tags;
 
   disambiguations = $("#disambiguations").find("ul > li").each(function(index, element) {
     disambiguation_links.push($(element).find("a").attr("href"));
@@ -83,6 +84,25 @@ exports.detail = async function(reqUrl) {
     author = $(element).find(".entry-author").text();
     date = $(element).find(".entry-date").text();
     [created_at, updated_at] = parseDate(date);
+
+    if (config.isMobile) {
+      let aRegex = new RegExp("<\\s*a[^>]*>(.*?)<\\s*/\\s*a>", "g");
+      let aSplitRegex = new RegExp("<a[^>](.*?)</a>");
+      body = body.replaceAll("<br>", "[BR]");
+      let sp = body.match(aRegex);
+      if (sp !== null) {
+        sp.forEach((s, i) => {
+          const c = cheerio.load(s);
+          const text = c.text();
+          const href = c("a").attr("href");
+          const replace = `[Link href=${href} text=${text.replace(" ", "!'^+")}]`;
+          body = body.replaceAll(s, replace)
+        });
+
+      }
+    }
+
+
     entry = {
       id,
       body,
@@ -90,13 +110,14 @@ exports.detail = async function(reqUrl) {
       author_id,
       fav_count,
       created_at,
-      updated_at
+      updated_at,
     };
     entries.push(entry);
   });
 
+
   thread = {
-    id:threadID,
+    id: threadID,
     disambiguation_titles,
     disambiguation_links,
     title,
@@ -104,26 +125,28 @@ exports.detail = async function(reqUrl) {
     total_page,
     current_page,
     tags,
-    entries
-  }
-  
+    entries,
+  };
+
   return thread;
-}
+};
 
 /*
-  parse endpoint url: basliklar/  
+  parse endpoint url: basliklar/
 */
 function parseUrl(reqUrl) {
   let parsedUrl = url.parse(reqUrl); //    /api/basliklar?kanal=spor?p=2
   let parsedQs = querystring.parse(parsedUrl.query);
-  
+
   let retUrl = "gundem";
 
-  if(parsedQs.kanal)
-    retUrl = "kanal/" + encodeURIComponent(parsedQs.kanal); // /kanal/spor
+  if (parsedQs.kanal) {
+    retUrl = "kanal/" + encodeURIComponent(parsedQs.kanal);
+  } // /kanal/spor
 
-  if(parsedQs.p)
-    retUrl += "?p=" + parsedQs.p; //      /kanal/spor?p=2
+  if (parsedQs.p) {
+    retUrl += "?p=" + parsedQs.p;
+  } //      /kanal/spor?p=2
 
   return retUrl;
 }
@@ -137,14 +160,14 @@ exports.idFromSlug = function(slug) {   //slug = "https://eksisozluk.com/pena--3
   let pathname = url.parse(slug).pathname; // pathname = "/pena--31782"
   let splar = pathname.split("--"); // ["/pena", "31782"]
   return splar[splar.length - 1];   // id = "31782"
-}
+};
 
 function parseDate(date) {
   let created_at = date;
   let updated_at = created_at.includes("~") ? created_at.split("~")[1].trim() : null;
-  if(updated_at) {
+  if (updated_at) {
     created_at = created_at.slice(0, -1 * (updated_at.length + 2)).trim();
-    if(created_at.length > updated_at.length) {
+    if (created_at.length > updated_at.length) {
       updated_at = created_at.slice(0, -1 * (updated_at.length)) + updated_at;
     }
   }
